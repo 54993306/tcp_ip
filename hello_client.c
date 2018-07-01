@@ -12,7 +12,8 @@ int main(int argc , char * argv[])
     int sock;   // 客户端套接字文件描述符
     struct sockaddr_in serv_addr;  // 服务器端地址
     char message[30];  //缓存消息的数组
-    int str_len; //读取消息的长度
+    int str_len = 0; //读取消息的长度,如果不初始化会得到一个无法预测的值
+    int idx = 0, read_len = 0;
 
     if(argc != 3)
     {
@@ -32,9 +33,15 @@ int main(int argc , char * argv[])
     if(connect(sock , (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1) // 向固定 ip 地址的套接字发出连接请求
         error_handling("connect() error");
     
-    str_len = read(sock , message , sizeof(message) - 1);  //从连接的 socket 中读取出数据
-    if(str_len == -1)
-        error_handling("read() error");
+    // str_len = read(sock , message , sizeof(message) - 1);  //从连接的 socket 中读取出数据
+    while( read_len = read(sock , &message[ idx++ ] , 1)){ // 为0时则跳出循环
+        if( read_len == -1)
+            error_handling("read() error");
+        
+        str_len += read_len;
+    }
+
+    printf("Function read call count: %d \n", str_len);
     
     printf("Message from server : %s \n",message);
     close(sock);
