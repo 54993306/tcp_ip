@@ -27,8 +27,8 @@ int main(int argc , char * argv[])
 
     memset(&serv_addr , 0 , sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
-    serv_addr.sin_port = htons(atoi(argv[2]));
+    serv_addr.sin_addr.s_addr = inet_addr(argv[1]); // 将字符串的 ip 地址转换为32位4字节的网络地址并转换为网络字节序
+    serv_addr.sin_port = htons(atoi(argv[2])); // ato1 字符串转整型
 
     if(connect(sock , (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1) // 向固定 ip 地址的套接字发出连接请求
         error_handling("connect() error");
