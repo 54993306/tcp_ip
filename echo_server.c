@@ -50,10 +50,10 @@ int main(int argc , char* argv[])
             error_handling(" accept() error ");
         else
             printf("Connected client %d \n" , i+1 );
-        while((str_len = read(clnt_sock , message , BUF_SIZE)) != 0)
+        while((str_len = read(clnt_sock , message , BUF_SIZE)) != 0) //如果客户端包体太小,可能会接收多个合并成一次接收
         {
             printf("recv client message : %s \n" , message);
-            write(clnt_sock , message , str_len);
+            write(clnt_sock , message , str_len);  //如果包体太大会被操作系统拆分成多个
         }
             
         close(clnt_sock);
