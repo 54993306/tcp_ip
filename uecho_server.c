@@ -55,3 +55,4 @@ void error_handling(char * message)
     fputc('\n',stderr);
     exit(1);
 }
+// linker command failed with exit code 1 (use -v to see invocation) 报这个错误可能是因为中文的空格导致的
