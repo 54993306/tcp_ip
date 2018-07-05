@@ -33,14 +33,15 @@ int main(int argc , char* argv[])
     serv_adr.sin_family = AF_INET;
     serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
     serv_adr.sin_port = htons(atoi(argv[1]));
-
-    if(bind(serv_sock , (struct sockaddr*)&serv_adr , sizeof(serv_adr)) == -1)
+    // udp 也可以 bind 地址, bind 不区分 tcp 和 udp
+    if(bind(serv_sock , (struct sockaddr*)&serv_adr , sizeof(serv_adr)) == -1) 
         error_handling("bind() error");
     
     while(1)  //服务器端不会跳出这个循环,不能被关闭
     {
         clnt_adr_sz = sizeof(clnt_adr);
         str_len = recvfrom(serv_sock , message , BUF_SIZE , 0 , (struct sockaddr*)&clnt_adr , &clnt_adr_sz);
+        // 第一次调用 sendto 函数时自动分配 ip 和端口, ip 为本机 ip 端口为随机端口
         sendto(serv_sock , message , str_len , 0 , (struct sockaddr*)&clnt_adr , clnt_adr_sz );
         // 服务器的字符串数组没有被清理,下一次的消息如果比上一次的内容少则会有残留内容
         printf("recv client message : %s \n" , message);  
