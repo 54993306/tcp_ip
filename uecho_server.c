@@ -43,6 +43,7 @@ int main(int argc , char* argv[])
         str_len = recvfrom(serv_sock , message , BUF_SIZE , 0 , (struct sockaddr*)&clnt_adr , &clnt_adr_sz);
         // 第一次调用 sendto 函数时自动分配 ip 和端口, ip 为本机 ip 端口为随机端口
         sendto(serv_sock , message , str_len , 0 , (struct sockaddr*)&clnt_adr , clnt_adr_sz );
+        // memset(&message , 0 , sizeof(message));
         // 服务器的字符串数组没有被清理,下一次的消息如果比上一次的内容少则会有残留内容
         printf("recv client message : %s \n" , message);  
     }

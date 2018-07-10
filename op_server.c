@@ -63,6 +63,7 @@ int main(int argc , char* argv[])
         
         result = calculate(opnd_cnt , (int*)opinfo , opinfo[recv_len - 1]);  //最后一个字符为运算操作符
         write(clnt_sock , (char*)&result , sizeof(result));                  //将计算结果发送给客户端
+        // memset(&message , 0 , sizeof(message));
         printf("operation result : %d \n" , result);
 
         close(clnt_sock);

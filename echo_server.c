@@ -54,6 +54,7 @@ int main(int argc , char* argv[])
         {
             printf("recv client message : %s \n" , message);
             write(clnt_sock , message , str_len);  //如果包体太大会被操作系统拆分成多个
+            memset(&message , 0 , sizeof(message));
         }
             
         close(clnt_sock);
